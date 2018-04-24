@@ -2,6 +2,7 @@ package edu.learn.config;
 
 import edu.learn.entities.User;
 import edu.learn.repos.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
@@ -13,11 +14,8 @@ import java.util.Collection;
 
 @Component
 public class ReactiveRepositoryUserDetails implements ReactiveUserDetailsService {
+    @Autowired
     private UserRepository users;
-
-    public ReactiveRepositoryUserDetails(UserRepository users){
-        this.users = users;
-    }
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
@@ -25,7 +23,7 @@ public class ReactiveRepositoryUserDetails implements ReactiveUserDetailsService
     }
 
     static class CustomUserDetails extends User implements UserDetails {
-        public CustomUserDetails(User user){
+        CustomUserDetails(User user){
             super(user);
         }
 

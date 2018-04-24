@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-    <nav sec:authorize="isAuthenticated()" class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav th:if="${principalMono} != null" class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">My Security App</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -53,13 +53,16 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
             <form th:action="@{/logout}" th:method="post">
-                <button class="btn btn-link" type="submit">Log out</button>
+                <button class="btn btn-link" type="submit">Log out</span></button>
             </form>
         </div>
     </nav>
+
     <div class="container" layout:fragment="content">
         <div class="starter-template">
-
+           Logged-in users - 1: <span th:text="${loggedInUser.principal.email}"/>
+           <br/>
+           Logged-in users - 2: <span th:text="${principalMono.principal.email}"/>
         </div>
     </div><!-- /.container -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
