@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * </dependency>
  */
 @Controller
-public class IndexController {
+public class ThymeController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(){
         return "index";
+    }
+
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    public String login(){
+        return "login";
     }
 }
