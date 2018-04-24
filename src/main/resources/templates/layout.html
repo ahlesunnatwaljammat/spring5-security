@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
@@ -15,7 +16,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
     <style type="text/css">
         body {
-            padding-top: 5rem;
+
         }
         .starter-template {
             padding: 3rem 1.5rem;
@@ -23,53 +24,46 @@
         }
     </style>
 </head>
-
-
 <body>
+    <nav sec:authorize="isAuthenticated()" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">My Security App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" th:href="@{/inbox}">Inbox</a>
-
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li th:if="${currentUser} == null">
-                <a class="nav-link" th:href="@{/signup}">Sign Up</a>
-            </li>
-            <li class="dropdown" th:if="${currentUser} != null">
-                <a href="#"
-                   class="dropdown-toggle nav-link"
-                   data-toggle="dropdown"
-                   role="button"
-                   aria-haspopup="true"
-                   aria-expanded="false"
-                   th:text="${currentUser.firstName}">Dropdown <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <form th:action="@{/logout}" th:method="post">
-                            <button class="btn btn-link" type="submit">Log out</button>
-                        </form>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container" layout:fragment="content">
-
-    <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-    </div>
-
-</div><!-- /.container -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <form th:action="@{/logout}" th:method="post">
+                <button class="btn btn-link" type="submit">Log out</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container" layout:fragment="content">
+        <div class="starter-template">
+            <div sec:authorize="isAuthenticated()">
+                Hello
+            </div>
+        </div>
+    </div><!-- /.container -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" type="application/javascript"/>
 </body>
 </html>
